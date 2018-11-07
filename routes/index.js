@@ -1,6 +1,10 @@
 const router = require('koa-router')()
-const musicAPI = require('music-api');
+const musicAPI = require('music-api')
 
+const axios = require('axios')
+const CircularJSON = require('circular-json')
+
+const neteaseApi = "127.0.0.1:3002"
 router.get('/searchSong', async (ctx, next) => {
   try {
     if (!ctx.request.query.key || !ctx.request.query.vendor) {
@@ -50,26 +54,47 @@ router.get('/getAlbum', async (ctx, next) => {
   }
 })
 
-router.get('/netList', async (ctx, next) => { // 488968776
+router.get('/userPlayList', async (ctx, next) => { // 348024701
   try {
-    ctx.body = await musicAPI.getPlaylist('netease', {
-     id: "488968776",
-     raw: true
-    })
+    let data = await axios.get(`http://127.0.0.1:3002/user/playlist?uid=${ctx.request.query.uid}`)
+    ctx.body = CircularJSON.stringify(data.data)
   } catch(err) {
     console.error("Getting My Play List error: " + err)
   }
 })
 
-router.get('/xiamiList', async (ctx, next) => { // 488968776
+let offsetParser = (list, limit, offset = 0, index = 0) => {
+  let iter = (list, limit, offset, index) => {
+    if (index === offset) {
+      return list.slice(index * limit, index * limit + limit)
+    } else {
+      return iter(list, limit, offset, index + 1)
+    }
+  }
+  return iter(list, Number(limit), Number(offset), index)
+}
+
+router.get('/listDetail', async (ctx, next)=> {
   try {
-    ctx.body = await musicAPI.getPlaylist('netease', {
-     id: "488968776",
-     raw: true
-    })
-  } catch(err) {
-    console.error("Getting My Play List error: " + err)
+    let offset = ctx.request.query.offset
+    let data = await axios.get(`http://127.0.0.1:3002/playlist/detail?id=${ctx.request.query.id}`)
+    let limit = ctx.request.query.limit === 'all' || !ctx.request.query.limit ? data.data.playlist.trackCount : ctx.request.query.limit
+    data.data.playlist.tracks = offsetParser(data.data.playlist.tracks, limit, offset)
+    ctx.body = data.data // add offset and limit
+  } catch(e) {
+    console.error("Getting Play List Detail Error: " + e)
   }
 })
+
+
+router.get('/search', async (ctx, next) => { // 488968776
+  try {
+    ctx.body = await CircularJSON.stringify(axios.get(`http://${neteaseApi}/search?keywards=${ctx.request.query.keyword}&type=${ctx.request.query.type || 1}`)) 
+  } catch(err) {
+    console.error("Searcg error: " + err)
+  }
+})
+
+
 
 module.exports = router
