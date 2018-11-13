@@ -4,7 +4,7 @@ api for diRty
 
 diRty-api rely on Binaryify/NeteaseCloudMusicApi.
 ``` bash
-$ git clone git@github.com:Binaryify/NeteaseCloudMusicApi.git
+$ git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
 $ cd NeteaseCloudMusicApi
 $ npm install
 $ set PORT=3002 && node app.js // windows
