@@ -15,6 +15,6 @@ in another directory
 $ git clone https://github.com/Muzm/diRty-api.git
 $ cd /diRty-api
 $ npm install
-$ node bin/www
+$ node bin/www // node 10.13.0 or heighter
 ```
 it will open api in prot 3001.

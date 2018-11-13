@@ -76,10 +76,13 @@ let offsetParser = (list, limit, offset = 0, index = 0) => {
 
 router.get('/listDetail', async (ctx, next)=> {
   try {
-    let offset = ctx.request.query.offset
+    let offset = ctx.request.query.offset || 0
     let data = await axios.get(`http://127.0.0.1:3002/playlist/detail?id=${ctx.request.query.id}&timestamp=${(new Date()).getTime()}`)
     let limit = ctx.request.query.limit === 'all' || !ctx.request.query.limit ? data.data.playlist.trackCount : ctx.request.query.limit
-    data.data.playlist.tracks = offsetParser(data.data.playlist.tracks, limit, offset)
+    data.data.playlist.tracks = offsetParser(
+      data.data.playlist.tracks, limit, 
+      ctx.request.query.limit > data.data.playlist.trackCount ? 0 : offset
+      )
     ctx.body = data.data // add offset and limit
   } catch(e) {
     console.error("Getting Play List Detail Error: " + e)
