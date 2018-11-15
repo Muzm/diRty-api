@@ -9,7 +9,7 @@ router.get('/searchSong', async (ctx, next) => {
     try {
         // TODO: Test Add
         if (!ctx.request.query.key || !ctx.request.query.vendor) {
-            ctx.response.status = 302
+            ctx.response.status = 422
             ctx.body = 'Vendor or key is empty'
         } else {
             ctx.body = await musicAPI.searchSong(ctx.request.query.vendor, {
