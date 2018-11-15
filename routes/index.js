@@ -54,6 +54,42 @@ router.get('/getAlbum', async (ctx, next) => {
   }
 })
 
+router.get('/search', async (ctx, next)=> {
+  let searchFetcher =  async (query)=> {
+    try {
+      if(query.vendor === "xiami") {
+        if(query.searchType === 1) {
+          return await musicAPI.searchSong("xiami", {
+            key: query.keyword,
+            limit: 50 || query.limit,
+            offset: 0 || query.offset
+          })
+        } else if(query.searchType === 2) {
+          return await musicAPI.searchAlbum("xiami", {
+            key: query.keyword,
+            limit: 50 || query.limit,
+            offset: 0 || query.offset
+          })
+        }
+      } else {
+        let data = await axios.get(`http://127.0.0.1:3002/search?keywords=${query.keyword}&type=${query.searchType || 1}&offset=${query.offset || 0}`)
+        return data.data
+      }
+    } catch(e) {
+      console.log("search error")
+    }
+  }
+
+  const query = ctx.request.query
+  if(!query.keyword) {
+    ctx.response.status = 302
+    ctx.body = "need keyword to search"
+  } else {
+    ctx.body = CircularJSON.stringify(await searchFetcher(query))
+    console.log(ctx.body);  
+  }
+})
+
 router.get('/userPlayList', async (ctx, next) => { // 348024701
   try {
     let data = await axios.get(`http://127.0.0.1:3002/user/playlist?uid=${ctx.request.query.uid}`)
@@ -90,13 +126,13 @@ router.get('/listDetail', async (ctx, next)=> {
 })
 
 
-router.get('/search', async (ctx, next) => { // 488968776
-  try {
-    ctx.body = await CircularJSON.stringify(axios.get(`http://${neteaseApi}/search?keywards=${ctx.request.query.keyword}&type=${ctx.request.query.type || 1}`)) 
-  } catch(err) {
-    console.error("Searcg error: " + err)
-  }
-})
+// router.get('/search', async (ctx, next) => { // 488968776
+//   try {
+//     ctx.body = await CircularJSON.stringify(axios.get(`http://${neteaseApi}/search?keywards=${ctx.request.query.keyword}&type=${ctx.request.query.type || 1}`)) 
+//   } catch(err) {
+//     console.error("Searcg error: " + err)
+//   }
+// })
 
 
 
