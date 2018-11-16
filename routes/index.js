@@ -4,18 +4,23 @@ const musicAPI = require('music-api')
 const axios = require('axios')
 const CircularJSON = require('circular-json')
 
+
 const neteaseApi = "127.0.0.1:3002"
 
 router.get('/getSong', async (ctx, next) => {
-  try {
-    if (!ctx.request.query.id || !ctx.request.query.vendor) {
-      ctx.response.status = 302
-      ctx.body = "Vendor or Song id is empty"
-    } else {
-      ctx.body = await musicAPI.getSong(ctx.request.query.vendor, { 
-        id: ctx.request.query.id,
-        raw: false
-      })
+    try {
+        if (!ctx.request.query.id || !ctx.request.query.vendor) {
+            ctx.response.status = 422
+            ctx.body = 'Vendor or Song id is empty'
+        } else {
+            ctx.body = await musicAPI.getSong(ctx.request.query.vendor, {
+                id: ctx.request.query.id,
+                raw: false,
+            })
+        }
+    } catch (err) {
+        console.error('Gettin Song error: ' + err)
+
     }
   } catch(err) {
     console.error("Gettin Song error: " + err)
