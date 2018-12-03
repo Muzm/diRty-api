@@ -12,10 +12,12 @@ router.get('/getSong', async (ctx, next) => {
             ctx.response.status = 422
             ctx.body = 'Vendor or Song id is empty'
         } else {
-            ctx.body = await musicAPI.getSong(ctx.request.query.vendor, {
-                id: ctx.request.query.id,
-                raw: false,
-            })
+            // ctx.body = await musicAPI.getSong(ctx.request.query.vendor, {
+            //     id: ctx.request.query.id,
+            //     raw: false,
+            // })
+            let data = await axios.get(`http://127.0.0.1:3002/song/url?id=${ctx.request.query.id}`)
+            ctx.body = data.data
         }
     } catch (err) {
         console.error('Gettin Song error: ' + err)
