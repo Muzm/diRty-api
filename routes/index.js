@@ -4,7 +4,7 @@ const musicAPI = require('music-api')
 const axios = require('axios')
 const CircularJSON = require('circular-json')
 
-const neteaseApi = '207.148.102.95:3002'
+const neteaseApi = '127.0.0.1:3002'
 
 router.get('/getSong', async (ctx, next) => {
     try {
@@ -21,7 +21,6 @@ router.get('/getSong', async (ctx, next) => {
         console.error('Gettin Song error: ' + err)
     }
 })
-
 
 router.get('/userPlayList', async (ctx, next) => {
     try {
