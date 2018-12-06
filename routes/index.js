@@ -12,10 +12,6 @@ router.get('/getSong', async (ctx, next) => {
             ctx.response.status = 422
             ctx.body = 'Vendor or Song id is empty'
         } else {
-            // ctx.body = await musicAPI.getSong(ctx.request.query.vendor, {
-            //     id: ctx.request.query.id,
-            //     raw: false,
-            // })
             let data = await axios.get(`http://127.0.0.1:3002/song/url?id=${ctx.request.query.id}`)
             ctx.body = data.data
         }
@@ -24,45 +20,24 @@ router.get('/getSong', async (ctx, next) => {
     }
 })
 
-router.get('/search', async (ctx, next) => {
-    let searchFetcher = async query => {
-        try {
-            if (query.vendor === 'xiami') {
-                if (query.type === 1) {
-                    return await musicAPI.searchSong('xiami', {
-                        key: query.keyword,
-                        limit: 50 || query.limit,
-                        offset: 0 || query.offset,
-                    })
-                } else if (query.type === 2) {
-                    return await musicAPI.searchAlbum('xiami', {
-                        key: query.keyword,
-                        limit: 50 || query.limit,
-                        offset: 0 || query.offset,
-                    })
-                }
-            } else {
-                let data = await axios.get(
-                    `http://127.0.0.1:3002/search?keywords=${
-                        query.keyword
-                    }&type=${query.type || 1}&offset=${query.offset *
-                        query.limit || 0}&limit=${query.limit}`
-                )
-                return data.data
-            }
-        } catch (e) {
-            console.log('search error')
-        }
-    }
+// router.get('/search', async (ctx, next) => {
+//     let searchFetcher = async query => {
+//         try {
+//             let data = await axios.get(`http://127.0.0.1:3002/search?keywords=${query.keyword}&type=${query.type || 1}&offset=${query.offset * query.limit || 0}&limit=${query.limit}`)
+//             return data.data
+//         } catch (e) {
+//             console.log('search error')
+//         }
+//     }
 
-    const query = ctx.request.query
-    if (!query.keyword) {
-        ctx.response.status = 302
-        ctx.body = 'need keyword to search'
-    } else {
-        ctx.body = CircularJSON.stringify(await searchFetcher(query))
-    }
-})
+//     const query = ctx.request.query
+//     if (!query.keyword) {
+//         ctx.response.status = 302
+//         ctx.body = 'need keyword to search'
+//     } else {
+//         ctx.body = CircularJSON.stringify(await searchFetcher(query))
+//     }
+// })
 
 router.get('/userPlayList', async (ctx, next) => {
     // 348024701
