@@ -4,7 +4,7 @@ const musicAPI = require('music-api')
 const axios = require('axios')
 const CircularJSON = require('circular-json')
 
-const neteaseApi = '127.0.0.1:3002'
+const neteaseApi = '207.148.102.95:3002'
 
 router.get('/getSong', async (ctx, next) => {
     try {
@@ -12,7 +12,9 @@ router.get('/getSong', async (ctx, next) => {
             ctx.response.status = 422
             ctx.body = 'Vendor or Song id is empty'
         } else {
-            let data = await axios.get(`http://127.0.0.1:3002/song/url?id=${ctx.request.query.id}`)
+            let data = await axios.get(
+                `http://${neteaseApi}/song/url?id=${ctx.request.query.id}`
+            )
             ctx.body = data.data
         }
     } catch (err) {
@@ -20,30 +22,11 @@ router.get('/getSong', async (ctx, next) => {
     }
 })
 
-// router.get('/search', async (ctx, next) => {
-//     let searchFetcher = async query => {
-//         try {
-//             let data = await axios.get(`http://127.0.0.1:3002/search?keywords=${query.keyword}&type=${query.type || 1}&offset=${query.offset * query.limit || 0}&limit=${query.limit}`)
-//             return data.data
-//         } catch (e) {
-//             console.log('search error')
-//         }
-//     }
-
-//     const query = ctx.request.query
-//     if (!query.keyword) {
-//         ctx.response.status = 302
-//         ctx.body = 'need keyword to search'
-//     } else {
-//         ctx.body = CircularJSON.stringify(await searchFetcher(query))
-//     }
-// })
 
 router.get('/userPlayList', async (ctx, next) => {
-    // 348024701
     try {
         let data = await axios.get(
-            `http://127.0.0.1:3002/user/playlist?uid=${ctx.request.query.uid}`
+            `http://${neteaseApi}/user/playlist?uid=${ctx.request.query.uid}`
         )
         let limit =
             ctx.query.limit === 'all'
@@ -59,7 +42,7 @@ router.get('/userPlayList', async (ctx, next) => {
 router.get('/albumDetail', async (ctx, next) => {
     try {
         let data = await axios.get(
-            `http://127.0.0.1:3002/album?id=${ctx.query.id}`
+            `http://${neteaseApi}/album?id=${ctx.query.id}`
         )
         const limit =
             ctx.query.limit === 'all' ? data.data.songs.length : ctx.query.limit
@@ -76,7 +59,7 @@ router.get('/albumDetail', async (ctx, next) => {
 router.get('/artist/album', async (ctx, next) => {
     try {
         let data = await axios.get(
-            `http://127.0.0.1:3002/artist/album?id=${ctx.query.id}&limit=${
+            `http://${neteaseApi}/artist/album?id=${ctx.query.id}&limit=${
                 ctx.query.limit
             }&offset=${ctx.query.offset * ctx.query.limit}`
         )
@@ -89,7 +72,7 @@ router.get('/artist/album', async (ctx, next) => {
 router.get('/listDetail', async (ctx, next) => {
     try {
         let data = await axios.get(
-            `http://127.0.0.1:3002/playlist/detail?id=${
+            `http://${neteaseApi}/playlist/detail?id=${
                 ctx.request.query.id
             }&timestamp=${new Date().getTime()}`
         )
