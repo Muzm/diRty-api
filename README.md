@@ -2,7 +2,7 @@
 api 
 api for diRty
 
-diRty-api rely on (Binaryify/NeteaseCloudMusicApi.)[https://github.com/Binaryify/NeteaseCloudMusicApi]
+diRty-api rely on Binaryify/NeteaseCloudMusicApi.
 ``` bash
 $ git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
 $ cd NeteaseCloudMusicApi
