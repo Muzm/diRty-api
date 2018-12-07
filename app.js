@@ -6,9 +6,6 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const cors = require('@koa/cors')
-var exec = require('child-process-promise').exec
-
-
 
 const index = require('./routes/index')
 
