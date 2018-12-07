@@ -43,10 +43,11 @@ const installNeteaseCloudMusicApi = async (packageTool = 'npm') => {
       } else console.log("NeteaseCloudMusicApi's deps installed")
     }
   }
-  
+
   try {
     await clone()
     await installDeps()
+    console.log(process.platform)
     console.log('NeteaseCloudMusicApi run in port 3002')
     if(process.platform === 'win32') {
       exec('set PORT=3002 & node app.js', {cwd: __dirname + '/NeteaseCloudMusicApi'})

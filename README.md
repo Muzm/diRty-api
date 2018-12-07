@@ -8,6 +8,6 @@ After you run diRty-api it will automatic install NeteaseCloudMusicApi and its d
 $ git clone https://github.com/Muzm/diRty-api.git
 $ cd /diRty-api
 $ npm install
-$ node bin/www // node 10.13.0 or heighter
+$ npm start // node 10.13.0 or heighter
 ```
 it will open api in prot 3001.
