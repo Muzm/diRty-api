@@ -8,7 +8,11 @@ const neteaseApi = '127.0.0.1:3002'
 
 router.redirect('/', '/f/')
 
-router.get('/f/**/', async (ctx) => {
+router.get('**/*.ico', (ctx)=> {
+    ctx.body = fs.readFileSync('build/favicon.ico')
+})
+
+router.get('/f/**/', async ctx => {
     ctx.type = 'html'
     ctx.body = fs.readFileSync('build/index.html')
 })
