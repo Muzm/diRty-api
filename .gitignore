@@ -12,9 +12,14 @@
 # vscode config
 /.vscode
 
+# raw genertated
 /public
 
+# raw genertated
 /views
+
+# automatic install
+/NeteaseCloudMusicApi
 
 # misc
 .DS_Store
