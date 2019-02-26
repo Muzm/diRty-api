@@ -24,7 +24,7 @@ app.use(
 app.use(cors())
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/build'))
+// app.use(require('koa-static')(__dirname + '/build')) production build from diRty
 
 // logger
 app.use(async (ctx, next) => {
