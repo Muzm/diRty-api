@@ -18,8 +18,10 @@
 # raw genertated
 /views
 
+/.vscode
+
 # automatic install
-/NeteaseCloudMusicApi
+#/NeteaseCloudMusicApi
 
 # misc
 .DS_Store
