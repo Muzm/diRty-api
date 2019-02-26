@@ -9,6 +9,13 @@
 # production
 /build
 
+# vscode config
+/.vscode
+
+/public
+
+/views
+
 # misc
 .DS_Store
 .env.local
