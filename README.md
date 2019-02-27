@@ -27,6 +27,6 @@ cd diRty-api
 dokcer image build -t dirty:0.0.1 .
 docker container run -p 3001:3001 -p 3002:3002 -it dirty:0.0.1
 # *OR* just pull the image from dockerhub
-docker pull gazingcandy/dirty-api
+docker pull gazingcandy/dirty-api:0.0.1
 ```
 
