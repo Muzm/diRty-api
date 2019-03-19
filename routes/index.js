@@ -1,12 +1,23 @@
 const router = require('koa-router')()
-const musicAPI = require('music-api')
 
 const axios = require('axios')
 const CircularJSON = require('circular-json')
+const fs = require('fs')
 
 const neteaseApi = '127.0.0.1:3002'
 
-router.get('/getSong', async (ctx, next) => {
+router.redirect('/', '/f/')
+
+router.get('**/*.ico', ctx => {
+    ctx.body = fs.readFileSync('build/favicon.ico')
+})
+
+router.get('/f/**/', async ctx => {
+    ctx.type = 'html'
+    ctx.body = fs.readFileSync('build/index.html')
+})
+
+router.get('/api/getSong', async (ctx, next) => {
     try {
         if (!ctx.request.query.id || !ctx.request.query.vendor) {
             ctx.response.status = 422
@@ -22,7 +33,7 @@ router.get('/getSong', async (ctx, next) => {
     }
 })
 
-router.get('/userPlayList', async (ctx, next) => {
+router.get('/api/userPlayList', async (ctx, next) => {
     try {
         let data = await axios.get(
             `http://${neteaseApi}/user/playlist?uid=${ctx.request.query.uid}`
@@ -31,14 +42,13 @@ router.get('/userPlayList', async (ctx, next) => {
             ctx.query.limit === 'all'
                 ? data.data.playlist.trackCount
                 : ctx.query.limit
-
         ctx.body = CircularJSON.stringify(data.data)
     } catch (err) {
         console.error('Getting My Play List error: ' + err)
     }
 })
 
-router.get('/albumDetail', async (ctx, next) => {
+router.get('/api/albumDetail', async (ctx, next) => {
     try {
         let data = await axios.get(
             `http://${neteaseApi}/album?id=${ctx.query.id}`
@@ -55,7 +65,7 @@ router.get('/albumDetail', async (ctx, next) => {
     }
 })
 
-router.get('/artist/album', async (ctx, next) => {
+router.get('/api/artist/album', async (ctx, next) => {
     try {
         let data = await axios.get(
             `http://${neteaseApi}/artist/album?id=${ctx.query.id}&limit=${
@@ -68,7 +78,7 @@ router.get('/artist/album', async (ctx, next) => {
     }
 })
 
-router.get('/listDetail', async (ctx, next) => {
+router.get('/api/listDetail', async (ctx, next) => {
     try {
         let data = await axios.get(
             `http://${neteaseApi}/playlist/detail?id=${

@@ -9,6 +9,20 @@
 # production
 /build
 
+# vscode config
+/.vscode
+
+# raw genertated
+/public
+
+# raw genertated
+/views
+
+/.vscode
+
+# automatic install
+/NeteaseCloudMusicApi
+
 # misc
 .DS_Store
 .env.local
