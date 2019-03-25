@@ -4,17 +4,20 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
+    "dev": "nodemon bin/www",
     "prd": "pm2 start bin/www",
     "lint": "prettier --config .prettierrc.yaml --write {{app,test/*,routes/*}.js,bin/www}",
-    "test": "PORT=3154 ava"
+    "test": "nyc ava -t",
+    "report": "nyc report --reporter=html"
   },
   "dependencies": {
     "@koa/cors": "^2.2.2",
     "axios": "^0.18.0",
+    "chalk": "^2.4.2",
     "child-process-promise": "^2.2.1",
     "circular-json": "^0.5.9",
     "debug": "^2.6.3",
+    "fs-extra": "^7.0.1",
     "koa": "^2.2.0",
     "koa-bodyparser": "^3.2.0",
     "koa-convert": "^1.2.0",
@@ -25,13 +28,16 @@
     "koa-static": "^3.0.0",
     "koa-views": "^5.2.1",
     "music-api": "^0.3.11",
+    "ora": "^3.2.0",
     "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
-    "ava": "1.0.0-rc.2",
+    "ava": "^1.4.0",
     "husky": "^1.1.4",
     "nodemon": "^1.8.1",
+    "nyc": "^13.3.0",
     "prettier": "1.15.2",
+    "rimraf": "^2.6.3",
     "superagent": "^4.0.0-beta.5",
     "superagent-jsonapify": "^1.4.5"
   },

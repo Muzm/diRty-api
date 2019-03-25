@@ -1,4 +1,6 @@
 .git
 node_modules
 npm-debug.log
-NeteaseCloudMusicApi/node_modules
+.deps/NeteaseCloudMusicApi/node_modules
+coverage
+.nyc_output
