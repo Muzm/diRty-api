@@ -10,4 +10,6 @@ test('fetch remote repo work well', async t => {
     rimraf.sync(resolveDeps(''))
     await getDeps('https://github.com/Binaryify/NeteaseCloudMusicApi.git')
     t.true(fs.existsSync(resolveDeps('NeteaseCloudMusicApi')))
+    await getDeps('https://github.com/Binaryify/NeteaseCloudMusicApi.git')
+    t.pass()
 })
