@@ -7,6 +7,7 @@ function makeLogger(color) {
     }
 }
 module.exports = {
+    log: makeLogger(chalk.gray),
     info: makeLogger(chalk.green),
     warn: makeLogger(chalk.yellow),
     error: makeLogger(chalk.red),
