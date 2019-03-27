@@ -4,8 +4,8 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const cors = require('@koa/cors')
-const timer = require('./middlewares/timer')
-const logger = require('./helper/logger')
+const timer = require('./middlewares/timer');
+const logger = require('./helper/logger');
 const index = require('./routes')
 const depsInstall = require('./depsInstall')
 

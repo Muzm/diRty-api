@@ -6,7 +6,7 @@
     "start": "node bin/www",
     "dev": "nodemon bin/www",
     "prd": "pm2 start bin/www",
-    "lint": "prettier --config .prettierrc.yaml --write {{app,helper/*,routes/*,middlewares/*}.js,bin/www,**/__tests__/*.js}",
+    "lint": "prettier --config .prettierrc.yaml --write {{app,test/*,routes/*}.js,bin/www}",
     "test": "nyc ava -t",
     "report": "nyc report --reporter=html"
   },
