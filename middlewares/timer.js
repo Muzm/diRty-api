@@ -4,6 +4,6 @@ module.exports = function(logger) {
         const start = new Date()
         await next()
         const ms = new Date() - start
-        logger.log(`${chalk.gray(ctx.method, ctx.url)} - ${ms}ms`)
+        logger.info(`${chalk.gray(ctx.method, ctx.url)} - ${ms}ms`)
     }
 }
