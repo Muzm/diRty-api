@@ -14,6 +14,7 @@ onerror(app)
 app.use(bodyparser({ enableTypes: ['json', 'form', 'text'] }))
 app.use(cors())
 app.use(json())
+app.use(require('koa-static')(__dirname + '/build'))
 app.use(timer(logger))
 app.use(index.routes(), index.allowedMethods())
 
