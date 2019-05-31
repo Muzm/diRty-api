@@ -100,4 +100,41 @@ router.get('/api/listDetail', async (ctx, next) => {
     }
 })
 
+router.all('/api/login', async (ctx, next) => {
+    try {
+        // let data = await axios.get(`http://${neteaseApi}/login/cellphone?phone=${ctx.query.phone}&password=${ctx.query.password}`)
+        // ctx.set('date', data.headers.date)
+        // ctx.cookie.set(data.headers['set-cookie'])
+        // data.headers['set-cookie'].forEach(cookieArray => {
+            // const splitedCookie = data.headers['set-cookie'][0].split(';')
+            
+            // const cookie = splitedCookie[0]
+
+            // const keyValue = cookie.split('=')
+        
+            // const key = keyValue[0]
+
+            // const value = keyValue[1]
+
+            // ctx.cookies.set('key', 'value')
+        // });
+        // ctx.set('etag', data.headers.etag)
+        ctx.cookies.set(
+            'cid', 
+            'hello world',
+        )
+        ctx.body = 'cookie is ok'
+    } catch(e) {
+        console.log(e)
+    }
+})
+
+router.get('/api/refresh', async (ctx) => {
+    try {
+        let data = await axios.get(`http://${neteaseApi}/refresh`)
+    } catch(e) {
+        console.log('refresh login error')
+    }
+})
+
 module.exports = router
