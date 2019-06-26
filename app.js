@@ -9,14 +9,14 @@ const logger = require('./helper/logger')
 const index = require('./routes')
 const depsInstall = require('./depsInstall')
 
-
-
 depsInstall()
 onerror(app)
 app.use(bodyparser({ enableTypes: ['json', 'form', 'text'] }))
-app.use(cors({
-    credentials: true
-}))
+app.use(
+    cors({
+        credentials: true,
+    })
+)
 app.use(json())
 app.use(require('koa-static')(__dirname + '/build'))
 app.use(timer(logger))

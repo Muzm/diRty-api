@@ -38,18 +38,7 @@ router.get('/api/userPlayList', async (ctx, next) => {
         let data = await axios.get(
             `http://${neteaseApi}/user/playlist?uid=${ctx.request.query.uid}`
         )
-        ctx.cookies.set(
-            'login',
-            'FUCK COOKIE',
-            {
-              domain: 'localhost',  // 写cookie所在的域名
-              path: '/',       // 写cookie所在的路径
-              maxAge: 10 * 60 * 1000, // cookie有效时长
-              expires: new Date('2020-1-1'),  // cookie失效时间
-              httpOnly: false,  // 是否只用于http请求中获取
-              overwrite: false  // 是否允许重写
-            }
-          )
+
         ctx.body = CircularJSON.stringify(data.data)
     } catch (err) {
         console.error('Getting My Play List error: ' + err)
@@ -112,41 +101,35 @@ router.post('/api/login', async (ctx, next) => {
     try {
         const phone = ctx.request.body.phone
         const password = ctx.request.body.password
-        let data = await axios.get(`http://${neteaseApi}/login/cellphone?phone=${phone}&password=${password}`)
-        
+        let data = await axios.get(
+            `http://${neteaseApi}/login/cellphone?phone=${phone}&password=${password}`
+        )
+
         ctx.set('date', data.headers.date)
 
         data.headers['set-cookie'].forEach(cookieArray => {
             const splitedCookie = cookieArray.split(';')
-            
+
             const cookie = splitedCookie[0]
 
             const keyValue = cookie.split('=')
-        
+
             const key = keyValue[0]
 
             const value = keyValue[1]
 
             ctx.cookies.set(key, value, {
-                domain: 'localhost',  // 写cookie所在的域名
-                path: '/',       // 写cookie所在的路径
+                domain: 'localhost', // 写cookie所在的域名
+                path: '/', // 写cookie所在的路径
                 maxAge: 7 * 24 * 3600 * 1000, // cookie有效时长
-                httpOnly: false,  // 是否只用于http请求中获取
-                overwrite: true  // 是否允许重写
-            });
-        });
+                httpOnly: false, // 是否只用于http请求中获取
+                overwrite: true, // 是否允许重写
+            })
+        })
 
         ctx.body = data.data
-    } catch(e) {
+    } catch (e) {
         console.log(e)
-    }
-})
-
-router.get('/api/refresh', async (ctx) => {
-    try {
-        let data = await axios.get(`http://${neteaseApi}/refresh`)
-    } catch(e) {
-        console.log('refresh login error')
     }
 })
 
