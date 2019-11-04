@@ -20,7 +20,7 @@ app.use(
 )
 app.use(json())
 app.use(require('koa-static')(__dirname + '/build'))
-app.use(session({ sameSite: "none" }, app))
+app.use(session({ sameSite: 'none' }, app))
 app.use(timer(logger))
 app.use(index.routes(), index.allowedMethods())
 
