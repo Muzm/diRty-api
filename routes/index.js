@@ -124,6 +124,7 @@ router.post('/api/login', async (ctx, next) => {
                 maxAge: 7 * 24 * 3600 * 1000, // cookie有效时长
                 httpOnly: false, // 是否只用于http请求中获取
                 overwrite: true, // 是否允许重写
+                
             })
         })
 

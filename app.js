@@ -8,6 +8,7 @@ const timer = require('./middlewares/timer')
 const logger = require('./helper/logger')
 const index = require('./routes')
 const depsInstall = require('./depsInstall')
+const session = require('koa-session')
 
 depsInstall()
 onerror(app)
@@ -19,6 +20,7 @@ app.use(
 )
 app.use(json())
 app.use(require('koa-static')(__dirname + '/build'))
+app.use(session({ sameSite: "none" }, app))
 app.use(timer(logger))
 app.use(index.routes(), index.allowedMethods())
 
