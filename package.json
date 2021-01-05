@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.2",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chalk": "^2.4.2",
     "child-process-promise": "^2.2.1",
     "circular-json": "^0.5.9",
